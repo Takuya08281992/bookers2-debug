@@ -3,5 +3,6 @@ Rails.application.routes.draw do
   resources :users,only: [:show,:index,:edit,:update]
   resources :books
   root 'home#top'
+  resources :home,only: [:index]
   get 'home/about'
 end
