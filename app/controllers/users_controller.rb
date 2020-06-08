@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :show, :edit, :new ]
 	before_action :baria_user, only: [:update]
 
   def show
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-  	params.require(:user).permit(:name, :introduction, :profile_image)
+  	params.require(:user).permit(:name, :profile_image, :introduction)
   end
 
   #url直接防止　メソッドを自己定義してbefore_actionで発動。
