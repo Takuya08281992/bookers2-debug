@@ -20,8 +20,7 @@ class BooksController < ApplicationController
   	if @book.save #入力されたデータをdbに保存する。
   		redirect_to books_path(@book.id), notice: "successfully created book!"#保存された場合の移動先を指定。
   	else
-  		@books = Book.all
-  		render 'index'
+      redirect_to books_path,notice: "error"
   	end
   end
 
@@ -39,6 +38,7 @@ class BooksController < ApplicationController
   	if @book.update(book_params)
   		redirect_to @book, notice: "successfully updated book!"
   	else #if文でエラー発生時と正常時のリンク先を枝分かれにしている。
+      flash[:notice] = "error"
   		render "edit"
   	end
   end
