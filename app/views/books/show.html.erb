@@ -23,7 +23,20 @@
 				</td>
 				<td><%= link_to @book.title, @book %></td>
 				<td><%= @book.body %></td>
-				<td><%= @book.book_comments.count %>コメント</td>
+
+				<td><% if @book.favorited_by?(current_user) %>
+					<%= link_to book_favorites_path(@book), method: :delete do %>
+					<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+					<%= @book.favorites.count %> 
+					<% end %>
+					<% else %>
+					<%= link_to book_favorites_path(@book), method: :post do %>
+					<i class="fa fa-heart-o" aria-hidden="true"></i>
+					<%= @book.favorites.count %> 
+					<% end %>
+					<% end %>
+				</td>
+				<td>コメント数:<%= @book.book_comments.count %></td>
 				<% if current_user.id == @book.user_id %>
 				<td><%= link_to "Edit",edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
 				<td><%= link_to "Destroy",@book, method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
